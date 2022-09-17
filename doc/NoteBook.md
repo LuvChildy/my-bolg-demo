@@ -103,4 +103,24 @@ git remote set-url origin git@github.com:username/repository.git
 ```
 
 
+### 数据库表结构
+#### 问题
+* 使用md5算法必须要用到加密盐？
+
+dao包名，用来做数据库管理类。
+pojo中的实体类需要在mapper包中创建一个Mapper类，对应的，需要在Mybatis中的MapperScan中修改对应的mapper位置，否则无法扫描
+
+扫描方式其实是名字相关的，需要数据库中的表和类名保持一致。
+
+
+### Controller结构
+下面的RequestMapping中的articles，是浏览器url中的地址
+```java
+//json交互
+@RestController
+@RequestMapping("articles")
+public class ArticleController {
+}
+```
+
 
