@@ -84,5 +84,23 @@ public class MyBatisConfig {
     }
 }
 ```
+### 代码上传问题
+上传代码遇到了Failed to connect to github.com port 443 after
+问题，这次是通过git命令设置代理和取消代理实现的。
+不知道下次行不行
+```bash
+git config --global https.proxy
+git config --global --unset https.proxy
+```
+设置切换git的http 和 ssh的命令是
+```bash
+// 1. 查看当前remote
+git remote -v
+// 2. 切换到http：
+git remote set-url origin https://github.com/username/repository.git
+// 3. 切换到ssh：
+git remote set-url origin git@github.com:username/repository.git
+```
+
 
 
