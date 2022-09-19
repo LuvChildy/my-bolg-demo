@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.childy.blog.dao.mapper.ArticleMapper;
 import com.childy.blog.dao.pojo.Article;
 import com.childy.blog.service.ArticleService;
+import com.childy.blog.vo.ArticleVo;
 import com.childy.blog.vo.Result;
 import com.childy.blog.vo.params.PageParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 //注册进去Spring的Service容器
@@ -41,9 +45,27 @@ public class ArticleServiceImpl implements ArticleService {
         List<Article> records = articlePage.getRecords();
 
         /**
-         * @Date:2022年9月18日 现在还不能返回，因为这个是数据库直接返回的数据，需要vo对象。
+         * @Date:2022年9月18日 现在还不能返回，因为这个是数据库直接返回的数据，需要vo对象，即面向view的对象。
          * 但是天太晚了，明天再学习。
          */
-        return null;
+        List<ArticleVo> articleVos = copyList(records);
+        return Result.success(articleVos);
     }
+
+    private List<ArticleVo> copyList(List<Article> records) {
+        List<ArticleVo> list = new ArrayList<>();
+        for (Article article : records) {
+            list.add(copy(article));
+        }
+        return list;
+    }
+
+    private ArticleVo copy(Article article) {
+        ArticleVo articleVo = new ArticleVo();
+        //Spring 提供的方法，用来copy属性
+        BeanUtils.copyProperties(article, articleVo);
+        articleVo.setCreateTime(new Date(article.getCreateData()).toString());
+        return articleVo;
+    }
+
 }

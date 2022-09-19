@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 //没有mapper好像不太能运行啊？
-//@MapperScan("com.childy.blog.dao.mapper")
+@MapperScan("com.childy.blog.dao.mapper")
 public class MyBatisConfig {
 
     //分页插件，这是什么东西？
