@@ -2,6 +2,8 @@ package com.childy.blog.dao.pojo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Article {
     private static final int articleTop = 1;
@@ -13,4 +15,6 @@ public class Article {
     private int commonCounts;
     //置顶标志
     private boolean weight;
+    private String author;
+    private List<Tag> tags;
 }

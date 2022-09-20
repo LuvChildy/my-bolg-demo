@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.childy.blog.dao.mapper.ArticleMapper;
 import com.childy.blog.dao.pojo.Article;
 import com.childy.blog.service.ArticleService;
+import com.childy.blog.service.TagService;
 import com.childy.blog.vo.ArticleVo;
 import com.childy.blog.vo.Result;
 import com.childy.blog.vo.params.PageParam;
@@ -22,6 +23,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleMapper articleMapper;
+
+    @Autowired
+    private TagService tagService;
 
     /**
      * @param param
@@ -60,11 +64,20 @@ public class ArticleServiceImpl implements ArticleService {
         return list;
     }
 
-    private ArticleVo copy(Article article) {
+    private ArticleVo copy(Article article, boolean showTag, boolean showAuthor) {
         ArticleVo articleVo = new ArticleVo();
         //Spring 提供的方法，用来copy属性
         BeanUtils.copyProperties(article, articleVo);
         articleVo.setCreateTime(new Date(article.getCreateData()).toString());
+
+        //并不是所有的文章都需要有作者和tag信息。
+        if (showTag) {
+            Long id = article.getId();
+            articleVo.setTags(tagService.findTagsVoByArticleId(id));
+        }
+        if (showAuthor) {
+            articleVo.setAuthor(article.getAuthor());
+        }
         return articleVo;
     }
 

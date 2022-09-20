@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.childy.blog.dao.mapper.TagMapper">
+
+<!--    List<Tag> findTagsByArticleId(Long id);-->
+<!--    这里我的本地没有这张表，需要看看老师的表是怎么设计的-->
+
+    <select id="findTagsByArticleId" parameterType="long" resultType="com.childy.blog.dao.pojo.Tag">
+        select id, tag_id as tagName from tag
+        where id in
+        (select tag_id from article_tag where article_id = #{id})
+    </select>
+
+</mapper>
